@@ -16,7 +16,12 @@ def value_of_card(card):
     3.  '2' - '10' = numerical value.
     """
 
-    pass
+    if card == 'J' or card == 'Q' or card == 'K':
+        return 10
+    if card == 'A':
+        return 1
+    if 2 <= int(card) <= 10:
+        return int(card)
 
 
 def higher_card(card_one, card_two):
@@ -30,7 +35,12 @@ def higher_card(card_one, card_two):
     3.  '2' - '10' = numerical value.
     """
 
-    pass
+    if value_of_card(card_one) > value_of_card(card_two):
+        return card_one
+    if value_of_card(card_one) < value_of_card(card_two):
+        return card_two
+    if value_of_card(card_one) == value_of_card(card_two):
+        return card_one, card_two
 
 
 def value_of_ace(card_one, card_two):
@@ -44,7 +54,11 @@ def value_of_ace(card_one, card_two):
     3.  '2' - '10' = numerical value.
     """
 
-    pass
+    if 4 < (value_of_card(card_one) + value_of_card(card_two)) <= (21 - 11):
+        return 11
+    
+    return 1
+    
 
 
 def is_blackjack(card_one, card_two):
@@ -58,7 +72,12 @@ def is_blackjack(card_one, card_two):
     3.  '2' - '10' = numerical value.
     """
 
-    pass
+    if (card_one == 'J' or card_one == 'Q' or card_one == 'K' or card_one == '10') and card_two == 'A':
+        return True
+    if (card_two == 'J' or card_two == 'Q' or card_two == 'K' or card_two == '10') and card_one == 'A':
+        return True
+    
+    return False
 
 
 def can_split_pairs(card_one, card_two):
@@ -68,7 +87,9 @@ def can_split_pairs(card_one, card_two):
     :return: bool - can the hand be split into two pairs? (i.e. cards are of the same value).
     """
 
-    pass
+    if value_of_card(card_one) == value_of_card(card_two):
+        return True
+    return False
 
 
 def can_double_down(card_one, card_two):
@@ -78,4 +99,6 @@ def can_double_down(card_one, card_two):
     :return: bool - can the hand can be doubled down? (i.e. totals 9, 10 or 11 points).
     """
 
-    pass
+    if 9 <= (value_of_card(card_one) + value_of_card(card_two)) <= 11:
+        return True
+    return False
