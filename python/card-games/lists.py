@@ -11,7 +11,7 @@ def get_rounds(number):
     :return: list - current round and the two that follow.
     """
 
-    pass
+    return [number, number +1, number + 2]
 
 
 def concatenate_rounds(rounds_1, rounds_2):
@@ -22,7 +22,7 @@ def concatenate_rounds(rounds_1, rounds_2):
     :return: list - all rounds played.
     """
 
-    pass
+    return rounds_1 + rounds_2
 
 
 def list_contains_round(rounds, number):
@@ -33,7 +33,10 @@ def list_contains_round(rounds, number):
     :return: bool - was the round played?
     """
 
-    pass
+    if number in rounds:
+        return True
+    
+    return False
 
 
 def card_average(hand):
@@ -43,7 +46,11 @@ def card_average(hand):
     :return: float - average value of the cards in the hand.
     """
 
-    pass
+    card_av_sum = 0
+    for item in hand:
+        card_av_sum = card_av_sum + item
+    
+    return card_av_sum / len(hand)
 
 
 def approx_average_is_average(hand):
@@ -53,7 +60,17 @@ def approx_average_is_average(hand):
     :return: bool - does one of the approximate averages equal the `true average`?
     """
 
-    pass
+    av_first_last = (hand[0] + hand[-1]) / 2
+
+    av_fl_card = bool(av_first_last == card_average(hand))
+    
+    median = len(hand) // 2
+    
+    av_med_card = bool(hand[median] == card_average(hand))
+    
+    if ((av_fl_card or av_med_card) is True) or ((av_fl_card and av_med_card) is True):
+        return True
+    return False
 
 
 def average_even_is_average_odd(hand):
@@ -62,8 +79,25 @@ def average_even_is_average_odd(hand):
     :param hand: list - cards in hand.
     :return: bool - are even and odd averages equal?
     """
-
-    pass
+    odd_cards_list = hand[0::2]
+    print(str(odd_cards_list))
+    
+    sum_of_odd_cards = 0
+    for card in odd_cards_list:
+        sum_of_odd_cards = sum_of_odd_cards + card 
+    
+    avarage_of_odd_cards = sum_of_odd_cards / len(odd_cards_list)
+    
+    even_cards_list = hand[1::2]
+    
+    sum_of_even_cards = 0
+    for card in even_cards_list:
+        sum_of_even_cards = sum_of_even_cards + card
+    
+    avarage_of_even_cards = sum_of_even_cards / len(even_cards_list)
+    
+    return bool(avarage_of_odd_cards == avarage_of_even_cards)
+    
 
 
 def maybe_double_last(hand):
@@ -73,4 +107,7 @@ def maybe_double_last(hand):
     :return: list - hand with Jacks (if present) value doubled.
     """
 
-    pass
+    if hand[-1] == 11:
+        hand[-1] = 22
+        return hand
+    return hand 
