@@ -14,9 +14,9 @@ def add_me_to_the_queue(express_queue, normal_queue, ticket_type, person_name):
     if ticket_type == 0:
         normal_queue.append(person_name)
         return normal_queue
-    else:
-        express_queue.append(person_name)
-        return express_queue
+    
+    express_queue.append(person_name)
+    return express_queue
 
 
 def find_my_friend(queue, friend_name):
@@ -29,6 +29,7 @@ def find_my_friend(queue, friend_name):
 
     if friend_name in queue:
         return queue.index(friend_name)
+    return None
 
 
 def add_me_with_my_friends(queue, index, person_name):
