@@ -8,7 +8,7 @@ def get_coordinate(record):
     :return: str - the extracted map coordinate.
     """
 
-    pass
+    return record[1]
 
 
 def convert_coordinate(coordinate):
@@ -17,8 +17,10 @@ def convert_coordinate(coordinate):
     :param coordinate: str - a string map coordinate
     :return: tuple - the string coordinate split into its individual components.
     """
-
-    pass
+    coordinate_split = ()
+    for coordinate_part in coordinate:
+        coordinate_split = coordinate_split + tuple(coordinate_part)
+    return coordinate_split
 
 
 def compare_records(azara_record, rui_record):
@@ -29,7 +31,7 @@ def compare_records(azara_record, rui_record):
     :return: bool - do the coordinates match?
     """
 
-    pass
+    return bool(azara_record[1] == str(rui_record[1][0] + rui_record[1][1]))
 
 
 def create_record(azara_record, rui_record):
@@ -40,7 +42,9 @@ def create_record(azara_record, rui_record):
     :return: tuple or str - the combined record (if compatible), or the string "not a match" (if incompatible).
     """
 
-    pass
+    if compare_records(azara_record, rui_record):
+        return azara_record + rui_record
+    return "not a match"
 
 
 def clean_up(combined_record_group):
@@ -53,5 +57,8 @@ def clean_up(combined_record_group):
 
     (see HINTS.md for an example).
     """
-
-    pass
+    report = ""
+    for entry in combined_record_group:
+        report_line = tuple([entry[0], entry[2], entry[3], entry[4]])
+        report = report + (str(report_line) + "\n")
+    return report
