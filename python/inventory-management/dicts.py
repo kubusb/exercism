@@ -34,7 +34,12 @@ def decrement_items(inventory, items):
     :return: dict - updated inventory with items decremented.
     """
 
-    pass
+    for item in items:
+        if inventory.get(item) == 0:
+            continue
+
+        inventory[item] = inventory.get(item) - 1
+    return inventory
 
 
 def remove_item(inventory, item):
@@ -45,7 +50,8 @@ def remove_item(inventory, item):
     :return: dict - updated inventory with item removed. Current inventory if item does not match.
     """
 
-    pass
+    inventory.pop(item, inventory)
+    return inventory
 
 
 def list_inventory(inventory):
@@ -55,4 +61,8 @@ def list_inventory(inventory):
     :return: list of tuples - list of key, value pairs from the inventory dictionary.
     """
 
-    pass
+    nempty_inventory = []
+    for key, value in inventory.items():
+        if value > 0:
+            nempty_inventory.append((key, value))
+    return nempty_inventory
