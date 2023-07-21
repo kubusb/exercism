@@ -43,7 +43,7 @@ def extend_route_information(route, more_route_information):
     :param more_route_information: dict -  extra route information.
     :return: dict - extended route information.
     """
-    pass
+    return {**route, **more_route_information}
 
 
 def fix_wagon_depot(wagons_rows):
@@ -52,4 +52,11 @@ def fix_wagon_depot(wagons_rows):
     :param wagons_rows: list[list[tuple]] - the list of rows of wagons.
     :return: list[list[tuple]] - list of rows of wagons.
     """
-    pass
+
+    resorted = zip(*wagons_rows)
+    final_list = []
+
+    for row in resorted:
+        final_list.append(list(row))
+    
+    return final_list
