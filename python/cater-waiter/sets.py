@@ -1,5 +1,5 @@
 """Functions for compiling dishes and ingredients for a catering company."""
-
+import itertools
 
 from sets_categories_data import (VEGAN,
                                   VEGETARIAN,
@@ -122,5 +122,20 @@ def singleton_ingredients(dishes, intersection):
 
     The function should return a `set` of ingredients that only appear in a single dish.
     """
+    
 
-    pass
+
+    combinations = list(itertools.combinations(dishes, 2))
+    its = set()
+    for combo in combinations:
+        its = its | (combo[0] & combo[1])
+
+    step_one = set()
+    for dish in dishes:
+        step_one = step_one ^ dish
+    
+    not_clean_diff = step_one & its
+
+    result = step_one - its
+    return result
+
