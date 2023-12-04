@@ -36,9 +36,9 @@ def check_drinks(drink_name, drink_ingredients):
     """
 
     if set(drink_ingredients).isdisjoint(ALCOHOLS):
-        return(drink_name + ' Mocktail')
+        return drink_name + ' Mocktail'
     else:
-        return(drink_name + ' Cocktail')
+        return drink_name + ' Cocktail'
 
 
 def categorize_dish(dish_name, dish_ingredients):
@@ -55,15 +55,15 @@ def categorize_dish(dish_name, dish_ingredients):
     """
 
     if set(dish_ingredients).issubset(VEGAN):
-        return(dish_name + ': VEGAN')
+        return dish_name + ': VEGAN'
     if set(dish_ingredients).issubset(VEGETARIAN):
-        return(dish_name + ': VEGETARIAN')
+        return dish_name + ': VEGETARIAN'
     if set(dish_ingredients).issubset(PALEO):
-        return(dish_name + ': PALEO')
+        return dish_name + ': PALEO'
     if set(dish_ingredients).issubset(KETO):
-        return(dish_name + ': KETO')
+        return dish_name + ': KETO'
     if set(dish_ingredients).issubset(OMNIVORE):
-        return(dish_name + ': OMNIVORE')
+        return dish_name + ': OMNIVORE'
 
 
 def tag_special_ingredients(dish):
@@ -88,8 +88,10 @@ def compile_ingredients(dishes):
 
     This function should return a `set` of all ingredients from all listed dishes.
     """
-
-    pass
+    master = set()
+    for dish in dishes:
+        master = master | dish
+    return master
 
 
 def separate_appetizers(dishes, appetizers):
@@ -103,7 +105,7 @@ def separate_appetizers(dishes, appetizers):
     Either list could contain duplicates and may require de-duping.
     """
 
-    pass
+    return list(set(dishes) - set(appetizers))
 
 
 def singleton_ingredients(dishes, intersection):
