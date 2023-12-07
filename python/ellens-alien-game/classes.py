@@ -24,5 +24,8 @@ class Alien:
         self.x_coordinate = coordinates[0]
         self.y_coordinate = coordinates[1]
 
+    def hit(sefl):
+        Alien.health -= 1
+
 
 #TODO:  create the new_aliens_collection() function below to call your Alien class with a list of coordinates.
