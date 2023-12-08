@@ -39,8 +39,6 @@ class Alien:
     def collision_detection(self, *args):
         pass
 
-alien_start_positions = [(4, 7), (-1, 0)]
-
 def new_aliens_collection(alien_start_positions):
     collection = []  # Initialize an empty list for the collection
     for position in alien_start_positions:
