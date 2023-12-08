@@ -24,7 +24,7 @@ class Alien:
         self.x_coordinate = coordinates[0]
         self.y_coordinate = coordinates[1]
 
-    def hit(sefl):
+    def hit(self):
         Alien.health -= 1
 
     def is_alive(self):
@@ -32,5 +32,8 @@ class Alien:
             return True
         else:
             return False
+
+    def collision_detection(self):
+        pass
 
 #TODO:  create the new_aliens_collection() function below to call your Alien class with a list of coordinates.
