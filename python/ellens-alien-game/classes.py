@@ -33,6 +33,10 @@ class Alien:
         else:
             return False
 
+    def teleport(self, new_coordinates):
+        self.x_coordinate = new_coordinates[0]
+        self.y_coordinate = new_coordinates[1]
+
     def collision_detection(self):
         pass
 
