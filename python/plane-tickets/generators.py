@@ -13,6 +13,7 @@ def generate_seat_letters(number):
     Example: A, B, C, D
 
     """
+    pass
 
     pass
 
