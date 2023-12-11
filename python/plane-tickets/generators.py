@@ -13,10 +13,17 @@ def generate_seat_letters(number):
     Example: A, B, C, D
 
     """
-    pass
-
-    pass
-
+    seat_no = 1
+    while number >= seat_no:
+        if seat_no % 4 == 1:
+            yield ("A")
+        elif seat_no % 4 == 2:
+            yield ("B")
+        elif seat_no % 4 == 3:
+            yield ("C")
+        elif seat_no % 4 == 0:
+            yield ("D")
+        seat_no = seat_no + 1
 
 def generate_seats(number):
     """Generate a series of identifiers for airline seats.
