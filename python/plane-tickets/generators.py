@@ -41,8 +41,15 @@ def generate_seats(number):
     Example: 3C, 3D, 4A, 4B
 
     """
-
-    pass
+    seat_no = 1
+    seat_letter = generate_seat_letters(number)
+    while number >= seat_no:
+        row_no = int(seat_no / 4 - 0.1) + 1
+        if row_no < 13:
+            yield str(row_no) + next(seat_letter)
+        else:
+            yield str(row_no + 1 ) + next(seat_letter)
+        seat_no += 1
 
 def assign_seats(passengers):
     """Assign seats to passengers.
