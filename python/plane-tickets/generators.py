@@ -16,13 +16,13 @@ def generate_seat_letters(number):
     seat_no = 1
     while number >= seat_no:
         if seat_no % 4 == 1:
-            yield ("A")
+            yield "A"
         elif seat_no % 4 == 2:
-            yield ("B")
+            yield "B"
         elif seat_no % 4 == 3:
-            yield ("C")
+            yield "C"
         elif seat_no % 4 == 0:
-            yield ("D")
+            yield "D"
         seat_no = seat_no + 1
 
 def generate_seats(number):
@@ -61,7 +61,12 @@ def assign_seats(passengers):
 
     """
 
-    pass
+    result = {}
+    seat = generate_seats(len(passengers))
+    for passenger in passengers:
+        result[passenger] = next(seat)
+    return result
+
 
 def generate_codes(seat_numbers, flight_id):
     """Generate codes for a ticket.
@@ -71,5 +76,9 @@ def generate_codes(seat_numbers, flight_id):
     :return: generator - generator that yields 12 character long ticket codes.
 
     """
-
-    pass
+    code = ''
+    for seat_number in seat_numbers:
+        code = str(seat_number) + str(flight_id)
+        while len(code) < 12:
+            code = code + '0'
+        yield code
