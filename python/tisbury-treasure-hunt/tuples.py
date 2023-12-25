@@ -62,3 +62,4 @@ def clean_up(combined_record_group):
         report_line = tuple([entry[0], entry[2], entry[3], entry[4]])
         report = report + (str(report_line) + "\n")
     return report
+
