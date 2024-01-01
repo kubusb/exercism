@@ -6,6 +6,12 @@ def answer(question):
     subtraction = re.findall(r"^What is (-?[0-9]\d*) minus (-?[0-9]\d*)\?", question)
     multiplication = re.findall(r"^What is (-?[0-9]\d*) multiplied by (-?[0-9]\d*)\?", question)
     division = re.findall(r"^What is (-?[0-9]\d*) divided by (-?[0-9]\d*)\?", question)
+    question = question.replace("What is ", "")
+    question = question.replace("?", "")
+    question = question.replace(" ", "")
+    print(question)
+    if question == "":
+        raise ValueError("syntax error")
     if len(what_is) > 0:
         return int(what_is[0])
     elif len(addition) > 0:
