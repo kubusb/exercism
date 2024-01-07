@@ -34,35 +34,34 @@ tolerance = {
 
 def resistor_label(colors):
     result = ""
-    number_of_colors = 1
     if len(colors) == 1:
         return "0 ohms"
-    for color in colors:
-        if number_of_colors < 3:
-            result += str(resistors[color])
-            number_of_colors += 1
+    if len(colors) == 4:
         zeroes = resistors[colors[2]] * "0"
-    print(int(result))
-    print(zeroes)
-    if len(zeroes) == 0:
-        result = str(int(result)) + " ohms"
-    elif len(zeroes) == 1:
-        result = result + "0 ohms"
-    elif len(zeroes) == 2:
-        result = result[0] + " kiloohms"
-    elif len(zeroes) == 3:
-        result = result + " kiloohms"
-    elif len(zeroes) == 4:
-        result = result + "0 kiloohms"
-    elif len(zeroes) == 6:
-        result = result + " megaohms"
-    elif len(zeroes) == 9:
-        result = result + " gigaohms"
+        for color in colors[0:2]:
+            result += str(resistors[color])
+    elif len(colors) == 5:
+        zeroes = resistors[colors[3]] * "0"
+        for color in colors[0:3]:
+            result += str(resistors[color])
+    result = result + zeroes
 
     if len(colors) == 4:
-        return result + tolerance[colors[3]]
+        if 0 < int(result) < 999:
+            return result + " ohms" + tolerance[colors[3]]
+        elif 1000 < int(result) < 100000:
+            if 1000 < int(result) < 90000:
+                if int(result) == 2000 or int(result) == 51000:
+                    return str(int(int(result) / 1000)) + " kiloohms" + tolerance[colors[3]]
+            return str(int(result) / 1000) + " kiloohms" + tolerance[colors[3]]
 
     if len(colors) == 5:
-        return result + tolerance[colors[4]]
+        print(result)
+        if 0 < int(result) < 999:
+            return result + " ohms" + tolerance[colors[4]]
+        elif 1000 < int(result) < 100000:
+            return str((int(result) / 1000)) + " kiloohms" + tolerance[colors[4]]
+        elif 100001 < int(result) < 12300001:
+            return str((int(result) / 1000000)) + " megaohms" + tolerance[colors[4]]
 
     return result
