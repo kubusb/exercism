@@ -1,8 +1,17 @@
 def find_anagrams(word, candidates):
-    anagrams = []
-    word_set = set(word)
+    # Function to normalize words (lowercase and sorted)
+    def normalize(word):
+        return ''.join(sorted(word.lower()))
+
+    # Normalize the target word
+    normalized_target = normalize(word)
+
+    # Prepare the anagram set
+    anagram_set = []
+
+    # Check each candidate
     for candidate in candidates:
-        if str(candidate).lower() != str(word).lower():
-            if set(candidate).issubset(word_set):
-                anagrams.append(candidate)
-    return anagrams
+        if candidate.lower() != word.lower() and normalize(candidate) == normalized_target:
+            anagram_set.append(candidate)
+
+    return anagram_set
