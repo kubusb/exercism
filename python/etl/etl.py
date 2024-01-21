@@ -1,2 +1,2 @@
 def transform(legacy_data):
-    pass
+    print(legacy_data)
