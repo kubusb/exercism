@@ -10,10 +10,10 @@ def add_item(current_cart, items_to_add):
     """
 
     for item in items_to_add:
-        if current_cart.get(item):
-            current_cart.update({item : (current_cart.get(item) + 1)})
+        if item in current_cart:
+            current_cart[item] += 1
         else:
-            current_cart.update({item : 1})
+            current_cart[item] = 1
     return current_cart
 
 
