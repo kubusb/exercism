@@ -9,7 +9,12 @@ def add_item(current_cart, items_to_add):
     :return: dict - the updated user cart dictionary.
     """
 
-    pass
+    for item in items_to_add:
+        if current_cart.get(item):
+            current_cart.update({item : (current_cart.get(item) + 1)})
+        else:
+            current_cart.update({item : 1})
+    return current_cart
 
 
 def read_notes(notes):
