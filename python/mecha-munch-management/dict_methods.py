@@ -24,7 +24,7 @@ def read_notes(notes):
     :return: dict - a user shopping cart dictionary.
     """
 
-    pass
+    return dict.fromkeys(notes, 1)
 
 
 def update_recipes(ideas, recipe_updates):
@@ -35,7 +35,10 @@ def update_recipes(ideas, recipe_updates):
     :return: dict - updated "recipe ideas" dict.
     """
 
-    pass
+    for recipe_name, recipe_content in recipe_updates:
+        ideas[recipe_name] = recipe_content
+
+    return ideas
 
 
 def sort_entries(cart):
@@ -45,7 +48,7 @@ def sort_entries(cart):
     :return: dict - users shopping cart sorted in alphabetical order.
     """
 
-    pass
+    return dict(sorted(cart.items()))
 
 
 def send_to_store(cart, isle_mapping):
@@ -55,8 +58,15 @@ def send_to_store(cart, isle_mapping):
     :param isle_mapping: dict - isle and refrigeration information dictionary.
     :return: dict - fulfillment dictionary ready to send to store.
     """
+    fulfillment = {}
+    for cart_item_name, cart_item_amount in cart.items():
+        fulfillment_list = []
+        fulfillment_list.append(cart_item_amount)
+        fulfillment_list.extend(isle_mapping[cart_item_name])
+        fulfillment.update({cart_item_name:fulfillment_list})
 
-    pass
+    return dict(sorted(fulfillment.items(), reverse=True))
+
 
 
 def update_store_inventory(fulfillment_cart, store_inventory):
@@ -67,4 +77,14 @@ def update_store_inventory(fulfillment_cart, store_inventory):
     :return: dict - store_inventory updated.
     """
 
-    pass
+    for item, fulfillment_list in fulfillment_cart.items():
+        new_fulfillment_list = []
+        if store_inventory[item][0] - fulfillment_cart[item][0] <= 0:
+            new_fulfillment_list.append("Out of Stock")
+        else:
+            new_fulfillment_list.append(store_inventory[item][0] - fulfillment_cart[item][0])
+        new_fulfillment_list.append(fulfillment_list[1])
+        new_fulfillment_list.append(fulfillment_list[2])
+        store_inventory.update({item:new_fulfillment_list})
+
+    return store_inventory
