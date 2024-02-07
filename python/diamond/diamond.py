@@ -1,2 +1,3 @@
+ALPHABET="ABCDEFGHIJKLMNOPQRSTUVXYZ"
 def rows(letter):
     pass
