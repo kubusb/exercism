@@ -1,18 +1,29 @@
-ALPHABET="ABCDEFGHIJKLMNOPQRSTUVXYZ"
+ALPHABET="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 def rows(letter):
     letter_position = ALPHABET.find(letter)
     result = []
+    current_row = letter_position
     external_spaces = 0
-    internal_spaces = letter_position + 1
-    if letter == "A":
+    if current_row == 0:
         result.append("A")
     else:
-        while internal_spaces > 0:
-            print("{}{}{}{}{}".format(external_spaces, ALPHABET[letter_position], internal_spaces, ALPHABET[letter_position], external_spaces))
+        while current_row >= 0:
+            internal_spaces = 2 * current_row - 1
+            current_letter = ALPHABET[current_row]
+            external_spaces_string = external_spaces * " "
+            internal_spaces_string = internal_spaces * " "
+            current_line = ""
+            if current_row == letter_position:
+                current_line = current_letter + internal_spaces_string + current_letter
+                result.append(current_line)
+            elif current_row == 0:
+                current_line = external_spaces_string + current_letter + external_spaces_string
+                result.append(current_line)
+                result.insert(0, current_line)
+            else:
+                current_line = external_spaces_string + current_letter + internal_spaces_string + current_letter + external_spaces_string
+                result.append(current_line)
+                result.insert(0, current_line)
+            current_row -= 1
             external_spaces += 1
-            internal_spaces -= 2
-            letter_position -= 1
     return result
-#-A-
-#B--B
-#-A-
