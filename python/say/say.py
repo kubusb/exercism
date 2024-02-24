@@ -38,7 +38,24 @@ def say(number):
 
     if 0 <= number <= 99 :
         number_list.append(number_str)
-    # for index, digit in enumerate(number_str):
-    #     print("Number was: {}, I:{}, D:{}".format(number, index, digit))
-    #     # Step 1:
+        if 0 <= number <= 20:
+            return simple_digit_mapping[number]
+        if 21 <= number <= 29:
+            return "twenty-" + simple_digit_mapping[number-20]
+        if 31 <= number <= 39:
+            return "thitry-" + simple_digit_mapping[number-30]
+        if 41 <= number <= 49:
+            return "fourty-" + simple_digit_mapping[number-40]
+        if 51 <= number <= 59:
+            return "fifty-" + simple_digit_mapping[number-50]
+        if 61 <= number <= 69:
+            return "sixty-" + simple_digit_mapping[number-60]
+        if 71 <= number <= 79:
+            return "seventy-" + simple_digit_mapping[number-70]
+        if 81 <= number <= 89:
+            return "eighty-" + simple_digit_mapping[number-80]
+        if 91 <= number <= 99:
+            return "ninety-" + simple_digit_mapping[number-90]
+        else:
+            return simple_digit_mapping[number]
     print(number_list)
