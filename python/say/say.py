@@ -24,3 +24,7 @@ def say(number):
     if number < 1000:
         hundreds, remainder = divmod(number, 100)
         return f"{simple_digit_mapping[hundreds]} hundred" + (f" {say(remainder)}" if remainder else "")
+
+    if number < 10_000:
+        thousands, remainder = divmod(number, 1000)
+        return f"{simple_digit_mapping[thousands]} thousand" + (f" {say(remainder)}" if remainder else "")
