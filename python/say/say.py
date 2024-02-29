@@ -23,12 +23,16 @@ def say(number):
 
     if number < 1000:
         hundreds, remainder = divmod(number, 100)
-        return f"{simple_digit_mapping[hundreds]} hundred" + (f" {say(remainder)}" if remainder else "")
+        return f"{say(hundreds)} hundred" + (f" {say(remainder)}" if remainder else "")
 
-    if number < 10_000:
-        thousands, remainder = divmod(number, 1000)
-        return f"{simple_digit_mapping[thousands]} thousand" + (f" {say(remainder)}" if remainder else "")
+    if number < 1_000_000:
+        thousands, remainder = divmod(number, 1_000)
+        return f"{say(thousands)} thousand" + (f" {say(remainder)}" if remainder else "")
 
-    if number <= 1_000_000:
+    if number < 1_000_000_000:
         millions, remainder = divmod(number, 1_000_000)
-        return f"{simple_digit_mapping[millions]} million" + (f" {say(remainder)}" if remainder else "")
+        return f"{say(millions)} million" + (f" {say(remainder)}" if remainder else "")
+
+    if number < 1_000_000_000_000:
+        billions, remainder = divmod(number, 1_000_000_000)
+        return f"{say(billions)} billion" + (f" {say(remainder)}" if remainder else "")
