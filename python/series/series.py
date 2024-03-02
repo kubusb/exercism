@@ -17,3 +17,7 @@ def slices(series, length):
     if len(series) < length:
         # if the slice length is longer than the series.
         raise ValueError("slice length cannot be greater than series length")
+    
+    # Handle the case, where slice size = series
+    if len(series) == length:
+        return [series]
