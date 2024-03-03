@@ -1,6 +1,8 @@
 """ Series """
 def slices(series, length):
     """ Series """
+    result = []
+
     # Error handling
     if length == 0:
         # if the slice length is zero.
@@ -21,3 +23,11 @@ def slices(series, length):
     # Handle the case, where slice size = series
     if len(series) == length:
         return [series]
+
+    if len(series) > length:
+        current_position = 0
+        while (current_position + length) <= len(series):
+            result.append(str(series[current_position:(current_position+length)]))
+            current_position += 1
+    
+    return result
