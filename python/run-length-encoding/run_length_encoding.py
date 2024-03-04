@@ -1,6 +1,8 @@
 def decode(string):
-    pass
+    if string == "":
+        return ""
 
 
 def encode(string):
-    pass
+    if string == "":
+        return ""
