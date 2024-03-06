@@ -2,16 +2,21 @@ def decode(string):
     if string == "":
         return ""
 
-def encode(string):
-    if string == "":
+def encode(input_str):
+    if not input_str:
         return ""
     
-    current_position = 0
+    count = 1
     result = ""
-    while current_position <= len(string):
-        if string[current_position:current_position+1] != string[current_position+1:current_position+2]:
-            result += string[current_position:current_position+1]
-            current_position += 1
+    for i in range(1, len(input_str)):
+        if input_str[i] == input_str[i-1]:
+            count += 1
         else:
-            break
+            if count > 1:
+                result += str(count)
+            result += input_str[i-1]
+            count = 1
+    if count > 1:
+        result += str(count)
+    result += input_str[-1]
     return result
