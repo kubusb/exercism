@@ -1,4 +1,7 @@
 def prime(number):
+    if number < 1:
+        raise ValueError('there is no zeroth prime')
+
     current_number = 2
     found_prime = 1
 
