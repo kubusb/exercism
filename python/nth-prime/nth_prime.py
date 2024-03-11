@@ -1,4 +1,12 @@
 def prime(number):
+    def is_prime(n):
+        if n <= 1:
+            return False
+        for i in range(2, int(n**0.5) + 1):
+            if n % i == 0:
+                return False
+        return True
+
     if number < 1:
         raise ValueError('there is no zeroth prime')
 
@@ -6,9 +14,10 @@ def prime(number):
     found_prime = 1
 
     while found_prime <= number:
-        if found_prime == number:
-            return current_number
-        break
-# Sprawdzanie liczby: Dla każdej liczby sprawdź, czy jest liczbą pierwszą. Można to zrobić, dzieląc ją przez wszystkie liczby mniejsze od niej i większe od 1. Jeśli żaden dzielnik nie dzieli jej bez reszty, liczba jest pierwsza.
-# Licznik: Jeśli liczba jest pierwsza, zwiększ licznik liczb pierwszych o 1. Jeśli licznik równa się n, znaleziono n-tą liczbę pierwszą.
-# Powtórzenie: Jeśli nie osiągnięto jeszcze n-tej liczby pierwszej, przejdź do następnej liczby i powtórz proces.
+        if is_prime(current_number):
+            if found_prime == number:
+                return current_number
+            current_number += 1
+            found_prime += 1
+        else:
+            current_number += 1
