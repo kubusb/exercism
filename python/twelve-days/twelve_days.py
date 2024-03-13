@@ -1,41 +1,49 @@
-carrol_data = {
-    0:['first','a Partridge in a Pear Tree'],
-    1:['second', 'two Turtle Doves'],
-    2:['third', 'three French Hens'],
-    3:['fourth', 'four Calling Birds'],
-    4:['fifth', 'five Gold Rings'],
-    5:['sixth', 'six Geese-a-Laying'],
-    6:['seventh', 'seven Swan-a-Swimming'],
-    7:['eighth', 'eight Maids-a-Milking'],
-    8:['nineth', 'nine Ladies Dancing'],
-    9:['tenth', 'ten Lords-a-Leaping'],
-    10:['eleventh', 'eleven Pipers Piping'],
-    11:['twelfth', 'twelve Drummers Drumming'],
-}
-def recite(start_verse, end_verse):
-    if start_verse > end_verse:
-        raise ValueError('End verse needs to be equal or greater than start verse')
-    if start_verse > 12 or end_verse > 12 or start_verse < 1 or end_verse < 0:
-        raise ValueError('Start and end verse need to be gratear than 0 and smaller than 13')
-    
-    current_verse = start_verse
-    result = []
+def recite(start_day, end_day):
+    gifts = {
+        1: "a Partridge in a Pear Tree",
+        2: "two Turtle Doves",
+        3: "three French Hens",
+        4: "four Calling Birds",
+        5: "five Gold Rings",
+        6: "six Geese-a-Laying",
+        7: "seven Swans-a-Swimming",
+        8: "eight Maids-a-Milking",
+        9: "nine Ladies Dancing",
+        10: "ten Lords-a-Leaping",
+        11: "eleven Pipers Piping",
+        12: "twelve Drummers Drumming"
+    }
 
-    while current_verse <= end_verse:
-        result.append("On the {} day of Christmas my true love gave to me: {}.".format(carrol_data[current_verse - 1][0], carrol_data[current_verse - 1][1]))
-        current_verse += 1
-    
-    return result
+    days = [
+        "first", "second", "third", "fourth", "fifth", "sixth",
+        "seventh", "eighth", "ninth", "tenth", "eleventh", "twelfth"
+    ]
 
-# On the first day of Christmas my true love gave to me: a Partridge in a Pear Tree.
-# On the second day of Christmas my true love gave to me: two Turtle Doves, and a Partridge in a Pear Tree.
-# On the third day of Christmas my true love gave to me: three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
-# On the fourth day of Christmas my true love gave to me: four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
-# On the fifth day of Christmas my true love gave to me: five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
-# On the sixth day of Christmas my true love gave to me: six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
-# On the seventh day of Christmas my true love gave to me: seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
-# On the eighth day of Christmas my true love gave to me: eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
-# On the ninth day of Christmas my true love gave to me: nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
-# On the tenth day of Christmas my true love gave to me: ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
-# On the eleventh day of Christmas my true love gave to me: eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
-# On the twelfth day of Christmas my true love gave to me: twelve Drummers Drumming, eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
+    lyrics = []
+    for i in range(start_day, end_day + 1):
+        lyric = f"On the {days[i - 1]} day of Christmas my true love gave to me:"
+        for j in range(i, 0, -1):
+            if j != i:
+                lyric += ","
+            if j == 1 and i != 1:
+                lyric += " and"
+            lyric += f" {gifts[j]}"
+        lyric += "."
+        lyrics.append(lyric)
+
+    return lyrics
+
+def main():
+    start_day = int(input("Enter the start day (1-12): "))
+    end_day = int(input("Enter the end day (1-12): "))
+
+    if start_day < 1 or start_day > 12 or end_day < 1 or end_day > 12 or start_day > end_day:
+        print("Invalid input. Start day and end day must be between 1 and 12, and start day should be less than or equal to end day.")
+        return
+
+    lyrics = recite(start_day, end_day)
+    for line in lyrics:
+        print(line)
+
+if __name__ == "__main__":
+    main()
