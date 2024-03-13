@@ -1,5 +1,5 @@
 carrol_data = {
-    0:['first','a Partridge in a Pear tree'],
+    0:['first','a Partridge in a Pear Tree'],
     1:['second', 'two Turtle Doves'],
     2:['third', 'three French Hens'],
     3:['fourth', 'four Calling Birds'],
@@ -17,6 +17,15 @@ def recite(start_verse, end_verse):
         raise ValueError('End verse needs to be equal or greater than start verse')
     if start_verse > 12 or end_verse > 12 or start_verse < 1 or end_verse < 0:
         raise ValueError('Start and end verse need to be gratear than 0 and smaller than 13')
+    
+    current_verse = start_verse
+    result = []
+
+    while current_verse <= end_verse:
+        result.append("On the {} day of Christmas my true love gave to me: {}.".format(carrol_data[current_verse - 1][0], carrol_data[current_verse - 1][1]))
+        current_verse += 1
+    
+    return result
 
 # On the first day of Christmas my true love gave to me: a Partridge in a Pear Tree.
 # On the second day of Christmas my true love gave to me: two Turtle Doves, and a Partridge in a Pear Tree.
