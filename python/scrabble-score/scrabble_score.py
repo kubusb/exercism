@@ -1,4 +1,4 @@
-def score(word):
+def score(word, double_letter=None, triple_letter=None, double_word=None, triple_word=None):
     letter_values = {
         'A': 1, 'E': 1, 'I': 1, 'O': 1, 'U': 1, 'L': 1, 'N': 1, 'R': 1, 'S': 1, 'T': 1,
         'D': 2, 'G': 2,
@@ -10,7 +10,17 @@ def score(word):
     }
     
     score = 0
-    for letter in word.upper():
-        score += letter_values.get(letter, 0)
+    for i, letter in enumerate(word.upper()):
+        if double_letter and i in double_letter:
+            score += letter_values.get(letter, 0) * 2
+        elif triple_letter and i in triple_letter:
+            score += letter_values.get(letter, 0) * 3
+        else:
+            score += letter_values.get(letter, 0)
+    
+    if double_word:
+        score *= 2
+    elif triple_word:
+        score *= 3
     
     return score
