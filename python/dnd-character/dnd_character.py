@@ -1,5 +1,7 @@
 import random
-from math import floor
+
+def modifier(constitution):
+    return (constitution - 10) // 2
 
 class Character:
     def __init__(self):
@@ -9,16 +11,14 @@ class Character:
         self.intelligence = self.roll_ability()
         self.wisdom = self.roll_ability()
         self.charisma = self.roll_ability()
-        self.hitpoints = self.calculate_hitpoints()
+        self.hitpoints = 10 + modifier(self.constitution)
 
     def roll_ability(self):
+        # Roll four 6-sided dice
         dice = [random.randint(1, 6) for _ in range(4)]
-        return sum(sorted(dice)[1:])
+        # Sum the largest three dice
+        total = sum(sorted(dice)[1:])
+        return total
 
-    def calculate_hitpoints(self):
-        constitution_modifier = floor((self.constitution - 10) / 2)
-        return 10 + constitution_modifier
-
-def modifier(self):
-    constitution_modifier = floor((Character.constitution - 10) / 2)
-    return 10 + constitution_modifier
+    def ability(self):
+        return random.randint(3, 18)
