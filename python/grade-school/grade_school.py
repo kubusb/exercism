@@ -1,25 +1,30 @@
 class School:
     def __init__(self):
-        # This dictionary will store grades as keys and a set of student names as values
         self.grades = {}
+        self.student_registry = {}
+        self.addition_tracker = []
 
     def add_student(self, name, grade):
-        """Adds a student to a specific grade. If the student is already in that grade, indicates an error."""
+        """Adds a student to a specific grade, preventing enrollment in multiple grades."""
+        if name in self.student_registry and self.student_registry[name] != grade:
+            self.addition_tracker.append(False)
+            return "This student is already enrolled in a different grade."
         if grade not in self.grades:
             self.grades[grade] = set()
         if name in self.grades[grade]:
+            self.addition_tracker.append(False)
             return "This student is already added to this grade."
         self.grades[grade].add(name)
+        self.student_registry[name] = grade
+        self.addition_tracker.append(True)
         return "OK."
 
     def grade(self, grade_number):
         """Returns a sorted list of all students in a specified grade."""
-        if grade_number in self.grades:
-            return sorted(self.grades[grade_number])
-        return []  # Return an empty list if there are no students in the grade
+        return sorted(self.grades.get(grade_number, []))
 
     def roster(self):
-        """Returns a sorted list of all students in all grades, sorted first by grade, then by name."""
+        """Returns a list of all students in all grades, sorted by grade and then by name."""
         all_students = []
         for grade in sorted(self.grades.keys()):
             students_in_grade = sorted(self.grades[grade])
@@ -27,10 +32,5 @@ class School:
         return all_students
 
     def added(self):
-        """Prints a summary of students added in each grade, sorted."""
-        result = []
-        for grade in sorted(self.grades):
-            students = sorted(self.grades[grade])
-            if students:
-                result.append(bool(True))
-        return result if result else "No students are enrolled."
+        """Returns a list of booleans indicating whether each student was successfully added."""
+        return self.addition_tracker
