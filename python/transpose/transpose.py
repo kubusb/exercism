@@ -1,2 +1,3 @@
 def transpose(lines):
-    pass
+    if len(lines) == 0:
+        return ""
