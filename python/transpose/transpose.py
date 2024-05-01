@@ -18,6 +18,7 @@ def transpose(lines):
     print("Longest line detected has the following number of chars: {}".format(counter_longest_line_symbol_count))
 
     # Edit if lines are too short - add spaces to the END of the lines.
-    
-    
+    for line in list_of_lines:
+        if len(line) < counter_longest_line_symbol_count:
+            line = line + (counter_longest_line_symbol_count - len(line))*" "
     # Then transpose 1:1 keeping the spaces.
