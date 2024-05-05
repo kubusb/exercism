@@ -1,2 +1,3 @@
 def egg_count(display_value):
-    pass
+    # Let's start by converting decimal to binary:
+    
