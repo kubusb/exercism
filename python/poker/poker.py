@@ -3,7 +3,7 @@ from collections import Counter
 def rank_to_value(rank):
     if rank in "23456789":
         return int(rank)
-    elif rank == 'T':
+    elif rank in ['T', '10']:
         return 10
     elif rank == 'J':
         return 11
@@ -13,10 +13,12 @@ def rank_to_value(rank):
         return 13
     elif rank == 'A':
         return 14
+    else:
+        return None
 
 def hand_rank(hand):
-    ranks = sorted([rank_to_value(card[0]) for card in hand], reverse=True)
-    suits = [card[1] for card in hand]
+    ranks = sorted([rank_to_value(card[0]) if card[0] != '1' else rank_to_value(card[:2]) for card in hand], reverse=True)
+    suits = [card[1] if card[0] != '1' else card[2] for card in hand]
     rank_counts = Counter(ranks)
     is_flush = len(set(suits)) == 1
     is_straight = all(ranks[i] - 1 == ranks[i + 1] for i in range(4))
@@ -40,7 +42,7 @@ def hand_rank(hand):
     return (0, ranks)
 
 def best_hands(hands):
-    parsed_hands = [[(card[0], card[1]) for card in hand.split()] for hand in hands]
+    parsed_hands = [[(card[:-1], card[-1]) for card in hand.split()] for hand in hands]
     ranked_hands = [(hand, hand_rank(hand)) for hand in parsed_hands]
     best_rank = max(rank for hand, rank in ranked_hands)
     best_hands = [hand for hand, rank in ranked_hands if rank == best_rank]
