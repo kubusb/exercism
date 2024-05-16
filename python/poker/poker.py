@@ -17,14 +17,19 @@ def rank_to_value(rank):
         return None
 
 def hand_rank(hand):
-    ranks = sorted([rank_to_value(card[0]) if card[0] != '1' else rank_to_value(card[:2]) for card in hand], reverse=True)
+    ranks = [rank_to_value(card[0]) if card[0] != '1' else rank_to_value(card[:2]) for card in hand]
     suits = [card[1] if card[0] != '1' else card[2] for card in hand]
     rank_counts = Counter(ranks)
+    ranks.sort(reverse=True)
+
     is_flush = len(set(suits)) == 1
     is_straight = all(ranks[i] - 1 == ranks[i + 1] for i in range(4))
+    is_low_straight = ranks == [14, 5, 4, 3, 2]  # Special case for A-2-3-4-5 straight
     
     if is_straight and is_flush:
         return (8, ranks)
+    if is_low_straight and is_flush:
+        return (8, [5, 4, 3, 2, 1])  # Treat A-2-3-4-5 straight flush as highest rank
     if 4 in rank_counts.values():
         return (7, [rank for rank, count in rank_counts.items() if count == 4] + [rank for rank, count in rank_counts.items() if count != 4])
     if 3 in rank_counts.values() and 2 in rank_counts.values():
@@ -33,6 +38,8 @@ def hand_rank(hand):
         return (5, ranks)
     if is_straight:
         return (4, ranks)
+    if is_low_straight:
+        return (4, [5, 4, 3, 2, 1])
     if 3 in rank_counts.values():
         return (3, [rank for rank, count in rank_counts.items() if count == 3] + sorted([rank for rank, count in rank_counts.items() if count != 3], reverse=True))
     if list(rank_counts.values()).count(2) == 2:
