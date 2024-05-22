@@ -1,5 +1,9 @@
 def rectangles(strings):
-    # Step 1: Parse the diagram into a 2D list of characters
+    # Step 1: Check if the input list is empty
+    if not strings:
+        return 0
+    
+    # Parse the diagram into a 2D list of characters
     grid = [list(line) for line in strings]
     rows = len(grid)
     cols = len(grid[0])
