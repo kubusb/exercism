@@ -1,7 +1,4 @@
 {
-    "python.testing.pytestArgs": [
-        "cater-waiter"
-    ],
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true
     "editor.renderWhitespace": "all",
