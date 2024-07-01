@@ -1,68 +1,51 @@
 class ConnectGame:
     def __init__(self, board):
-        self.board = self.parse_board(board)
-        print("Parsed board:")
-        for row in self.board:
-            print(" ".join(row))
-        
-    def parse_board(self, board_str):
-        lines = board_str.strip().split('\n')
-        board = [list(line.strip()) for line in lines]
-        return board
-    
-    def in_bounds(self, x, y):
-        return 0 <= x < len(self.board) and 0 <= y < len(self.board[x])
-    
-    def dfs(self, player, x, y, visited, target):
-        if target(x, y):
-            print(f"Player {player} has reached the target at ({x}, {y})")
-            return True
-        visited.add((x, y))
-        
-        directions = [(-1, 0), (1, 0), (0, -1), (0, 1), (-1, 1), (1, -1)]  # Hexagonal directions
-        for dx, dy in directions:
-            nx, ny = x + dx, y + dy
-            if self.in_bounds(nx, ny) and self.board[nx][ny] == player and (nx, ny) not in visited:
-                if self.dfs(player, nx, ny, visited, target):
-                    return True
-        return False
-    
-    def has_won(self, player):
-        visited = set()
-        if player == 'O':
-            target = lambda x, y: x == len(self.board) - 1
-            starts = [(0, y) for y in range(len(self.board[0])) if self.board[0][y] == 'O']
-        else:  # player == 'X'
-            target = lambda x, y: y == len(self.board[0]) - 1
-            starts = [(x, 0) for x in range(len(self.board)) if self.board[x][0] == 'X']
-        
-        for x, y in starts:
-            print(f"Starting DFS for player {player} from ({x}, {y})")
-            if self.dfs(player, x, y, visited, target):
-                return True
-        return False
-    
+        self.board = [row.split() for row in board.strip().split('\n')]
+        self.height = len(self.board)
+        self.width = max(len(row) for row in self.board)
+
     def get_winner(self):
-        if self.has_won('O'):
-            return "O"
-        elif self.has_won('X'):
-            return "X"
-        else:
-            return ""
+        if self.height == 1 and self.width == 1:
+            return self.board[0][0] if self.board[0][0] in 'XO' else ''
 
-# Debugging output for internal state verification
-def debug_test():
-    board_str = """
-. O . .
-O X X X
-O O O .
-X X O X
-. O X .
-"""
-    game = ConnectGame(board_str)
-    winner = game.get_winner()
-    print(f"Winner: {winner}")
+        if self._check_win('O', self._top_edge(), self._bottom_edge()):
+            return 'O'
+        
+        if self._check_win('X', self._left_edge(), self._right_edge()):
+            return 'X'
+        
+        return ''
 
-# Run the debug test
-if __name__ == "__main__":
-    debug_test()
+    def _check_win(self, player, start_edge, end_edge):
+        visited = set()
+        stack = list(start_edge)
+        
+        while stack:
+            row, col = stack.pop()
+            if (row, col) in end_edge and self._is_valid_move(row, col, player):
+                return True
+            
+            if (row, col) not in visited and self._is_valid_move(row, col, player):
+                visited.add((row, col))
+                stack.extend(self._get_neighbors(row, col))
+        
+        return False
+
+    def _is_valid_move(self, row, col, player):
+        return 0 <= row < self.height and 0 <= col < len(self.board[row]) and self.board[row][col] == player
+
+    def _get_neighbors(self, row, col):
+        directions = [(0, 1), (0, -1), (1, 0), (-1, 0), (1, -1), (-1, 1)]
+        return [(row + dr, col + dc) for dr, dc in directions if self._is_valid_move(row + dr, col + dc, self.board[row][col])]
+
+    def _top_edge(self):
+        return [(0, col) for col in range(len(self.board[0]))]
+
+    def _bottom_edge(self):
+        return [(self.height - 1, col) for col in range(len(self.board[-1]))]
+
+    def _left_edge(self):
+        return [(row, 0) for row in range(self.height)]
+
+    def _right_edge(self):
+        return [(row, len(self.board[row]) - 1) for row in range(self.height)]
