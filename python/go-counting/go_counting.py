@@ -1,3 +1,7 @@
+WHITE = "W"
+BLACK = "B"
+NONE = ""
+
 class Board:
     def __init__(self, board):
         self.board = board
