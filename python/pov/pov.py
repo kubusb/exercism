@@ -35,6 +35,10 @@ class Tree:
         if not path:
             raise ValueError("Tree could not be reoriented")
 
+        # If it's a singleton tree, just return a copy of it
+        if len(path) == 1:
+            return Tree(from_node)
+
         new_root = Tree(from_node)
         current = new_root
         for node in reversed(path[:-1]):
@@ -46,9 +50,10 @@ class Tree:
             current = new_node
 
         # Move original children of the new root
-        original_children = [child for child in path[-2].children if child.label == from_node][0].children
-        for child in original_children:
-            new_root.children.append(Tree(child.label, child.children))
+        if len(path) > 1:
+            original_children = [child for child in path[-2].children if child.label == from_node][0].children
+            for child in original_children:
+                new_root.children.append(Tree(child.label, child.children))
 
         return new_root
 
