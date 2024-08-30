@@ -26,27 +26,33 @@ class BowlingGame:
                 if len(self.rolls) % 2 == 0:  # End of frame
                     self.current_frame += 1
                     self.current_frame_score = 0
-        elif self.current_frame == 10:
-            if len(self.rolls) == 20:
-                if self.rolls[18] == 10:  # Strike in 10th frame
-                    self.current_frame_score = 0
-                else:
-                    self.current_frame_score = self.rolls[18]
-            elif len(self.rolls) == 21:
-                if self.rolls[18] == 10:  # Strike in 10th frame
-                    self.current_frame_score = self.rolls[19]
-                elif self.rolls[18] + self.rolls[19] == 10:  # Spare in 10th frame
-                    self.current_frame_score = 0
-                else:
-                    self.current_frame += 1
-            elif len(self.rolls) == 22:
-                self.current_frame += 1
+        else:  # 10th frame
+            self._handle_10th_frame(pins)
+
+    def _handle_10th_frame(self, pins):
+        if len(self.rolls) == 19:
+            # First roll in 10th frame, no need to check yet
+            return
+        if len(self.rolls) == 20:
+            if self.rolls[18] == 10 or self.rolls[18] + self.rolls[19] == 10:
+                # Awaiting bonus roll(s) for a strike/spare in 10th frame
+                return
+        if len(self.rolls) >= 21:
+            # Bonus roll logic
+            if self.rolls[18] == 10 and self.rolls[19] < 10:
+                if len(self.rolls) == 22:
+                    if self.rolls[20] + self.rolls[21] > 10:
+                        raise ValueError("Two bonus rolls after a strike in the 10th frame cannot score more than 10 unless the first one is a strike")
+            self.current_frame += 1
 
     def score(self):
+        if self._is_incomplete_game():
+            raise Exception("Cannot score an incomplete game")
+
         score = 0
         roll_index = 0
 
-        for _ in range(10):
+        for frame in range(10):
             if self._is_strike(roll_index):
                 score += 10 + self._strike_bonus(roll_index)
                 roll_index += 1
@@ -58,6 +64,18 @@ class BowlingGame:
                 roll_index += 2
 
         return score
+
+    def _is_incomplete_game(self):
+        # Adjust incomplete game logic to account for 10th frame bonuses
+        if len(self.rolls) < 12:
+            return True
+        if len(self.rolls) < 20:
+            return False
+        if self.rolls[18] == 10:
+            return len(self.rolls) < 21 or len(self.rolls) == 22
+        if self.rolls[18] + self.rolls[19] == 10:
+            return len(self.rolls) < 21
+        return len(self.rolls) < 20
 
     def _is_strike(self, roll_index):
         return roll_index < len(self.rolls) and self.rolls[roll_index] == 10
