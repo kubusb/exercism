@@ -103,7 +103,8 @@ class BowlingGame:
             return True
         if len(self.rolls) == 21 and self.rolls[18] != 10:
             return True
+        if len(self.rolls) == 21 and self.rolls[18] == 10 and self.rolls[19] != 10:
+            return True
         if len(self.rolls) == 22:
             return True
         return False
-    
