@@ -42,6 +42,8 @@ class BowlingGame:
             if self.rolls[18] == 10:  # Strike in 10th frame
                 if self.rolls[19] < 10 and pins == 10:
                     raise ValueError("The second bonus roll after a strike in the last frame cannot be a strike if the first one is not a strike")
+                if len(self.rolls) == 21 and self.rolls[19] < 10 and pins + self.rolls[19] > 10:
+                    raise ValueError("Two bonus rolls after a strike in the 10th frame cannot score more than 10 points unless the first one is a strike")
                 if len(self.rolls) == 22:
                     if self.rolls[20] + self.rolls[21] > 10:
                         raise ValueError("Two bonus rolls after a strike in the 10th frame cannot score more than 10 unless the first one is a strike")
