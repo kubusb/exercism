@@ -26,12 +26,12 @@ class BowlingGame:
                 if len(self.rolls) % 2 == 0:  # End of frame
                     self.current_frame += 1
                     self.current_frame_score = 0
+
         else:  # 10th frame
             self._handle_10th_frame(pins)
 
     def _handle_10th_frame(self, pins):
         if len(self.rolls) == 19:
-            # First roll in 10th frame, no need to check yet
             return
         if len(self.rolls) == 20:
             if self.rolls[18] == 10 or self.rolls[18] + self.rolls[19] == 10:
@@ -52,8 +52,19 @@ class BowlingGame:
             raise Exception("Cannot score an incomplete game")
 
         # Additional check for incomplete game with strike in 10th frame
-        if len(self.rolls) == 20 and self.rolls[18] == 10:
+        if len(self.rolls) == 19 and self.rolls[18] == 10:
             raise Exception("Cannot score an incomplete game")
+
+        # New exception for incomplete bonus rolls after a strike in the last frame
+        if len(self.rolls) == 20 and self.rolls[18] == 10:
+            raise Exception("Cannot score before rolling the second bonus ball for a strike in the last frame")
+
+        # New check for two bonus rolls after a strike in the last frame scoring more than 10 points
+        if len(self.rolls) >= 20 and self.rolls[18] == 10:
+            if len(self.rolls) == 21 and self.rolls[19] < 10 and self.rolls[20] > 10 - self.rolls[19]:
+                raise Exception("Two bonus rolls after a strike in the last frame cannot score more than 10 points")
+            elif len(self.rolls) == 22 and self.rolls[19] + self.rolls[20] > 10 and self.rolls[19] != 10:
+                raise Exception("Two bonus rolls after a strike in the last frame cannot score more than 10 points")
 
         score = 0
         roll_index = 0
