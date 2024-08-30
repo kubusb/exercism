@@ -45,6 +45,11 @@ class Tree:
                     new_node.children.append(Tree(child.label, child.children))
             current = new_node
 
+        # Move original children of the new root
+        original_children = [child for child in path[-2].children if child.label == from_node][0].children
+        for child in original_children:
+            new_root.children.append(Tree(child.label, child.children))
+
         return new_root
 
     def path_to(self, from_node, to_node):
